@@ -94,14 +94,6 @@
       <Project>{477f3a92-db37-448a-a29b-5156751cdf8c}</Project>
       <Name>Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library\PathFinder.csproj">
-      <Project>{477f3a92-db37-448a-a29b-5156751cdf8c}</Project>
-      <Name>PathFinder</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PathFinder\PathFinder.csproj">
-      <Project>{477f3a92-db37-448a-a29b-5156751cdf8c}</Project>
-      <Name>PathFinder</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
