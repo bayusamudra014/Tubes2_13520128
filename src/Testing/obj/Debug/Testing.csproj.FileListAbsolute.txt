@@ -9,3 +9,5 @@
 /home/bayu/Documents/tubes-stima-dir/src/Testing/obj/Debug/Testing.csproj.CopyComplete
 /home/bayu/Documents/tubes-stima-dir/src/Testing/obj/Debug/Testing.dll
 /home/bayu/Documents/tubes-stima-dir/src/Testing/obj/Debug/Testing.pdb
+/home/bayu/Documents/tubes-stima-dir/bin/test/Debug/Testing.dll
+/home/bayu/Documents/tubes-stima-dir/bin/test/Debug/Testing.pdb
