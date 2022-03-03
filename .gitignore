@@ -1,4 +1,3 @@
 /.git
-/src/Tubes2Stima/obj
+obj/
 packages/
-
