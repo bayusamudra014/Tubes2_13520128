@@ -10,7 +10,7 @@ namespace Testing
         [Test]
         public void Test1()
         {
-            Assert.AreEqual("Halo, Dunia",Cobacoba.Halo());
+            Assert.AreEqual("Halo, Dunia","Halo, Dunia");
         }
     }
 }

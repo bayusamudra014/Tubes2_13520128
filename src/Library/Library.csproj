@@ -38,8 +38,15 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Class1.cs" />
+        <Compile Include="Interfaces\FileExplorer.cs" />
+        <Compile Include="Interfaces\Graph.cs" />
+        <Compile Include="Interfaces\Node.cs" />
+        <Compile Include="Interfaces\PathCrawler.cs" />
+        <Compile Include="Interfaces\Search.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Classes" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
