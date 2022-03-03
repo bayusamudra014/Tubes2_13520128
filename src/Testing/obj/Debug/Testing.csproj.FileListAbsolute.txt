@@ -1,0 +1,11 @@
+/home/bayu/Documents/tubes-stima-dir/src/Testing/bin/Debug/Testing.dll
+/home/bayu/Documents/tubes-stima-dir/src/Testing/bin/Debug/Testing.pdb
+/home/bayu/Documents/tubes-stima-dir/src/Testing/bin/Debug/nunit.framework.dll
+/home/bayu/Documents/tubes-stima-dir/src/Testing/bin/Debug/PathFinder.dll
+/home/bayu/Documents/tubes-stima-dir/src/Testing/bin/Debug/PathFinder.pdb
+/home/bayu/Documents/tubes-stima-dir/src/Testing/bin/Debug/nunit.framework.xml
+/home/bayu/Documents/tubes-stima-dir/src/Testing/obj/Debug/Testing.csprojAssemblyReference.cache
+/home/bayu/Documents/tubes-stima-dir/src/Testing/obj/Debug/Testing.csproj.CoreCompileInputs.cache
+/home/bayu/Documents/tubes-stima-dir/src/Testing/obj/Debug/Testing.csproj.CopyComplete
+/home/bayu/Documents/tubes-stima-dir/src/Testing/obj/Debug/Testing.dll
+/home/bayu/Documents/tubes-stima-dir/src/Testing/obj/Debug/Testing.pdb
