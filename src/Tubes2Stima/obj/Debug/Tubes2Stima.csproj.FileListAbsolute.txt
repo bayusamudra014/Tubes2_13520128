@@ -41,3 +41,15 @@ C:/Users/willy/source/repos/Tubes2Stima/Tubes2Stima/obj/Debug/Tubes2Stima.csproj
 /home/bayu/Documents/tubes-stima-dir/bin/Debug/Tubes2Stima.exe.config
 /home/bayu/Documents/tubes-stima-dir/bin/Debug/Tubes2Stima.exe
 /home/bayu/Documents/tubes-stima-dir/bin/Debug/Tubes2Stima.pdb
+C:\Users\willy\Tubes2_13520128\bin\Debug\Tubes2Stima.exe.config
+C:\Users\willy\Tubes2_13520128\bin\Debug\Tubes2Stima.exe
+C:\Users\willy\Tubes2_13520128\bin\Debug\Tubes2Stima.pdb
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.csproj.AssemblyReference.cache
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.csproj.SuggestedBindingRedirects.cache
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.Form1.resources
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.Properties.Resources.resources
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.csproj.GenerateResource.cache
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.csproj.CoreCompileInputs.cache
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.csproj.CopyComplete
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.exe
+C:\Users\willy\Tubes2_13520128\src\Tubes2Stima\obj\Debug\Tubes2Stima.pdb
