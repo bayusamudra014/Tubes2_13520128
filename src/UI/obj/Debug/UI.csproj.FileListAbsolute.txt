@@ -1,0 +1,12 @@
+/home/bayu/Documents/tubes-stima-dir/bin/Debug/UI.exe.config
+/home/bayu/Documents/tubes-stima-dir/bin/Debug/UI.exe
+/home/bayu/Documents/tubes-stima-dir/bin/Debug/UI.pdb
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/UI.csprojAssemblyReference.cache
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/UI.exe.config
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/Tubes2Stima.Form1.resources
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/UI.Properties.Resources.resources
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/UI.csproj.GenerateResource.cache
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/UI.csproj.CoreCompileInputs.cache
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/UI.csproj.CopyComplete
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/UI.exe
+/home/bayu/Documents/tubes-stima-dir/src/UI/obj/Debug/UI.pdb
