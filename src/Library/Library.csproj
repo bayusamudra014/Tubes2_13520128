@@ -38,6 +38,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Enums\FileType.cs" />
         <Compile Include="Halo.cs" />
         <Compile Include="Interfaces\FileExplorer.cs" />
         <Compile Include="Interfaces\Graph.cs" />
@@ -45,6 +46,7 @@
         <Compile Include="Interfaces\PathCrawler.cs" />
         <Compile Include="Interfaces\Search.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Struct\File.cs" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Classes" />
