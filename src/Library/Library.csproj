@@ -38,6 +38,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Halo.cs" />
         <Compile Include="Interfaces\FileExplorer.cs" />
         <Compile Include="Interfaces\Graph.cs" />
         <Compile Include="Interfaces\Node.cs" />
