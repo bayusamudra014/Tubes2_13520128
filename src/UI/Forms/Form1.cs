@@ -6,24 +6,61 @@ namespace Tubes2Stima
 {
     public partial class Form1 : Form
     {
-        private FolderBrowserDialog folder;
         private string filename = "";
         private bool allfiles = false;
         private string choice = "";
+        private string currentPath = "";
         public Form1()
         {
             InitializeComponent();
         }
 
+        private string getFilename(string file)
+        {
+            FileInfo File = new FileInfo(file);
+            return File.Name;
+        }
+
+        private void makeGraph(Microsoft.Msagl.Drawing.Graph graph, string path)
+        {
+            string[] files = Directory.GetFiles(path);
+            foreach (string file in files)
+            {
+                graph.AddEdge(getFilename(path), getFilename(file));
+            }
+            string[] folders = Directory.GetDirectories(path);
+            if (folders.Length == 0)
+            {
+                //
+            } else
+            {
+                foreach (string folder in folders)
+                {
+                    graph.AddEdge(getFilename(path), getFilename(folder));
+                    this.makeGraph(graph, folder);
+                }
+            }
+        }
+        private void BFS()
+        {
+            string currentFile = this.currentPath;
+            while (currentFile != this.filename)
+            {
+                string file;
+                string[] files = Directory.GetFiles(this.currentPath);
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            this.folder = new FolderBrowserDialog();
-            if (this.folder.ShowDialog() == DialogResult.OK)
+            FolderBrowserDialog dir = new FolderBrowserDialog();
+            if (dir.ShowDialog() == DialogResult.OK)
             {
-                label3.Text = this.folder.SelectedPath;
+                this.currentPath = dir.SelectedPath;
+                label3.Text = dir.SelectedPath;
                 listBox1.Items.Clear();
-                string[] files = Directory.GetFiles(this.folder.SelectedPath);
-                string[] folders = Directory.GetDirectories(this.folder.SelectedPath);
+                string[] files = Directory.GetFiles(dir.SelectedPath);
+                string[] folders = Directory.GetDirectories(dir.SelectedPath);
 
                 foreach (string file in files)
                 {
@@ -32,11 +69,17 @@ namespace Tubes2Stima
                 foreach (string folder in folders)
                 {
                     listBox1.Items.Add(folder);
+                    string[] folde = Directory.GetDirectories(folder);
+                    foreach (string fold in folde)
+                    {
+                        listBox1.Items.Add(fold);
+                    }
                 }
             }
             
         }
 
+        // Label for UI
         private void label1_Click(object sender, EventArgs e)
         {
         }
@@ -80,11 +123,12 @@ namespace Tubes2Stima
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (this.filename == "" || this.choice == "")
+            if (this.filename == "" || this.choice == "" || this.currentPath == "")
             {
                 MessageBox.Show("Sorry, please give a valid input");
             } else
             {
+                
                 //create a form 
                 System.Windows.Forms.Form form = new System.Windows.Forms.Form();
                 //create a viewer object 
@@ -92,6 +136,7 @@ namespace Tubes2Stima
                 //create a graph object 
                 Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
                 //create the graph content 
+                this.makeGraph(graph, this.currentPath);
                 graph.AddEdge("A", "B");
                 graph.AddEdge("B", "C");
                 graph.AddEdge("A", "C").Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
