@@ -57,7 +57,7 @@ namespace Tubes2Stima
             }
         }
 
-        private void BFS(Microsoft.Msagl.Drawing.Graph graph, string path, bool allOccurence)
+        private void BFS(Microsoft.Msagl.Drawing.Graph graph, string path, bool allOccurence, bool flag)
         {
             if (allOccurence)
             {
@@ -82,7 +82,40 @@ namespace Tubes2Stima
                 {
                     foreach (string folder in folders)
                     {
-                        this.BFS(graph, folder, true);
+                        this.BFS(graph, folder, true, false);
+                    }
+                }
+            } else
+            {
+                string[] files = Directory.GetFiles(path);
+                int i = 0;
+                while (!flag && i < files.Length)
+                {
+                    if (getFilename(files[i]) != this.filename)
+                    {
+                        changeColor(graph, path, files[i], Microsoft.Msagl.Drawing.Color.Red);
+                        i++;
+                    }
+                    else
+                    {
+                        changeColor(graph, this.currentPath, files[i], Microsoft.Msagl.Drawing.Color.Green);
+                        graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                {
+                    string[] folders = Directory.GetDirectories(path);
+                    if (folders.Length == 0)
+                    {
+                        //
+                    }
+                    else
+                    {
+                        foreach (string folder in folders)
+                        {
+                            this.BFS(graph, folder, false, flag);
+                        }
                     }
                 }
             }
@@ -174,7 +207,10 @@ namespace Tubes2Stima
                 Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
                 //create the graph content 
                 this.makeGraph(graph, this.currentPath);
-                this.BFS(graph, this.currentPath, true);
+                if (this.choice == "BFS")
+                {
+                    this.BFS(graph, this.currentPath, this.allfiles, false);
+                }
                 graph.AddEdge("A", "B");
                 graph.AddEdge("B", "C");
                 graph.AddEdge("A", "C").Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
