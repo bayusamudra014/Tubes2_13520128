@@ -41,13 +41,50 @@ namespace Tubes2Stima
                 }
             }
         }
-        private void BFS()
+
+        private void changeColor(Microsoft.Msagl.Drawing.Graph graph, string path, string child, Microsoft.Msagl.Drawing.Color color)
         {
-            string currentFile = this.currentPath;
-            while (currentFile != this.filename)
+            if (path == child)
             {
-                string file;
-                string[] files = Directory.GetFiles(this.currentPath);
+                //
+            } else
+            {
+                FileInfo child_dir = new FileInfo(child);
+                string parrent = child_dir.DirectoryName;
+                graph.FindNode(getFilename(child_dir.Name)).Attr.FillColor = color;
+                graph.AddEdge(getFilename(parrent), child_dir.Name).Attr.Color = color;
+                changeColor(graph, path, parrent, color);
+            }
+        }
+
+        private void BFS(Microsoft.Msagl.Drawing.Graph graph, string path, bool allOccurence)
+        {
+            if (allOccurence)
+            {
+                string[] files = Directory.GetFiles(path);
+                foreach (string file in files)
+                {
+                    if (getFilename(file) != this.filename)
+                    {
+                        changeColor(graph, path, file, Microsoft.Msagl.Drawing.Color.Red);
+                    } else
+                    {
+                        changeColor(graph, this.currentPath, file, Microsoft.Msagl.Drawing.Color.Green);
+                        graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
+                    }
+                }
+                string[] folders = Directory.GetDirectories(path);
+                if (folders.Length == 0)
+                {
+                    //
+                }
+                else
+                {
+                    foreach (string folder in folders)
+                    {
+                        this.BFS(graph, folder, true);
+                    }
+                }
             }
         }
 
@@ -137,6 +174,7 @@ namespace Tubes2Stima
                 Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
                 //create the graph content 
                 this.makeGraph(graph, this.currentPath);
+                this.BFS(graph, this.currentPath, true);
                 graph.AddEdge("A", "B");
                 graph.AddEdge("B", "C");
                 graph.AddEdge("A", "C").Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
