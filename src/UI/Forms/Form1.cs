@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Tubes2Stima
@@ -10,6 +11,8 @@ namespace Tubes2Stima
         private bool allfiles = false;
         private string choice = "";
         private string currentPath = "";
+        private List<string> listOfFiles = new List<string>();
+        private bool isFound = false;
         public Form1()
         {
             InitializeComponent();
@@ -57,67 +60,75 @@ namespace Tubes2Stima
             }
         }
 
-        private void BFS(Microsoft.Msagl.Drawing.Graph graph, string path, bool allOccurence, bool flag)
+        private void addBFSList(string path)
         {
-            if (allOccurence)
+            // TODO
+        }
+
+        private void addDFSList(string path)
+        {
+            string[] files = Directory.GetFiles(path);
+            foreach (string file in files)
             {
-                string[] files = Directory.GetFiles(path);
-                foreach (string file in files)
+                this.listOfFiles.Add(file);
+            }
+
+            string[] folders = Directory.GetDirectories(path);
+            foreach (string folder in folders)
+            {
+                this.listOfFiles.Add(folder);
+                addDFSList(folder);
+            }
+        }
+
+        private void processGraph(Microsoft.Msagl.Drawing.Graph graph)
+        {
+            if (this.allfiles)
+            {
+                while (this.listOfFiles.Count != 0)
                 {
-                    if (getFilename(file) != this.filename)
+                    string process = this.listOfFiles.ToArray()[0];
+                    if (getFilename(process) != this.filename)
                     {
-                        changeColor(graph, path, file, Microsoft.Msagl.Drawing.Color.Red);
+                        FileInfo parrentFile = new FileInfo(process);
+                        string parrent = parrentFile.DirectoryName;
+                        changeColor(graph, parrent, process, Microsoft.Msagl.Drawing.Color.Red);
                     } else
                     {
-                        changeColor(graph, this.currentPath, file, Microsoft.Msagl.Drawing.Color.Green);
-                        graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
+                        changeColor(graph, this.currentPath, process, Microsoft.Msagl.Drawing.Color.Green);
+                        this.isFound = true;
                     }
-                }
-                string[] folders = Directory.GetDirectories(path);
-                if (folders.Length == 0)
-                {
-                    //
-                }
-                else
-                {
-                    foreach (string folder in folders)
-                    {
-                        this.BFS(graph, folder, true, false);
-                    }
+                    this.listOfFiles.Remove(process);
                 }
             } else
             {
-                string[] files = Directory.GetFiles(path);
-                int i = 0;
-                while (!flag && i < files.Length)
+                while (this.listOfFiles.Count != 0 && getFilename(this.listOfFiles.ToArray()[0]) != this.filename)
                 {
-                    if (getFilename(files[i]) != this.filename)
+                    string process = this.listOfFiles.ToArray()[0];
+                    FileInfo parrentFile = new FileInfo(process);
+                    string parrent = parrentFile.DirectoryName;
+                    changeColor(graph, parrent, process, Microsoft.Msagl.Drawing.Color.Red);
+                    this.listOfFiles.Remove(process);
+                }
+
+                if (this.listOfFiles.Count != 0)
+                {
+                    changeColor(graph, this.currentPath, this.listOfFiles.ToArray()[0], Microsoft.Msagl.Drawing.Color.Green);
+                    this.isFound = true;
+                    while (this.listOfFiles.Count != 0)
                     {
-                        changeColor(graph, path, files[i], Microsoft.Msagl.Drawing.Color.Red);
-                        i++;
-                    }
-                    else
-                    {
-                        changeColor(graph, this.currentPath, files[i], Microsoft.Msagl.Drawing.Color.Green);
-                        graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
-                        flag = true;
+                        this.listOfFiles.Remove(this.listOfFiles.ToArray()[0]);
                     }
                 }
-                if (!flag)
-                {
-                    string[] folders = Directory.GetDirectories(path);
-                    if (folders.Length == 0)
-                    {
-                        //
-                    }
-                    else
-                    {
-                        foreach (string folder in folders)
-                        {
-                            this.BFS(graph, folder, false, flag);
-                        }
-                    }
-                }
+            }
+
+            if (this.isFound)
+            {
+                graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
+            }
+            else
+            {
+                graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Red;
             }
         }
 
@@ -128,25 +139,7 @@ namespace Tubes2Stima
             {
                 this.currentPath = dir.SelectedPath;
                 label3.Text = dir.SelectedPath;
-                listBox1.Items.Clear();
-                string[] files = Directory.GetFiles(dir.SelectedPath);
-                string[] folders = Directory.GetDirectories(dir.SelectedPath);
-
-                foreach (string file in files)
-                {
-                    listBox1.Items.Add(file);
-                }
-                foreach (string folder in folders)
-                {
-                    listBox1.Items.Add(folder);
-                    string[] folde = Directory.GetDirectories(folder);
-                    foreach (string fold in folde)
-                    {
-                        listBox1.Items.Add(fold);
-                    }
-                }
-            }
-            
+            }     
         }
 
         // Label for UI
@@ -198,7 +191,6 @@ namespace Tubes2Stima
                 MessageBox.Show("Sorry, please give a valid input");
             } else
             {
-                
                 //create a form 
                 System.Windows.Forms.Form form = new System.Windows.Forms.Form();
                 //create a viewer object 
@@ -206,19 +198,16 @@ namespace Tubes2Stima
                 //create a graph object 
                 Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
                 //create the graph content 
+                this.isFound = false;
                 this.makeGraph(graph, this.currentPath);
                 if (this.choice == "BFS")
                 {
-                    this.BFS(graph, this.currentPath, this.allfiles, false);
+                    addBFSList(this.currentPath);
+                } else
+                {
+                    addDFSList(this.currentPath);
                 }
-                graph.AddEdge("A", "B");
-                graph.AddEdge("B", "C");
-                graph.AddEdge("A", "C").Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
-                graph.FindNode("A").Attr.FillColor = Microsoft.Msagl.Drawing.Color.Magenta;
-                graph.FindNode("B").Attr.FillColor = Microsoft.Msagl.Drawing.Color.MistyRose;
-                Microsoft.Msagl.Drawing.Node c = graph.FindNode("C");
-                c.Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
-                c.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Diamond;
+                processGraph(graph);
                 //bind the graph to the viewer 
                 viewer.Graph = graph;
                 //associate the viewer with the form 
@@ -229,11 +218,6 @@ namespace Tubes2Stima
                 //show the form 
                 form.ShowDialog();
             }
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
