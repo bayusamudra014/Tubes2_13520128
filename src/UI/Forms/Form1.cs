@@ -88,7 +88,8 @@ namespace Tubes2Stima
                 while (this.listOfFiles.Count != 0)
                 {
                     string process = this.listOfFiles.ToArray()[0];
-                    if (getFilename(process) != this.filename)
+                    FileAttributes attr = File.GetAttributes(process);
+                    if (getFilename(process) != this.filename || (attr & FileAttributes.Directory) == FileAttributes.Directory)
                     {
                         FileInfo parrentFile = new FileInfo(process);
                         string parrent = parrentFile.DirectoryName;
@@ -102,13 +103,21 @@ namespace Tubes2Stima
                 }
             } else
             {
-                while (this.listOfFiles.Count != 0 && getFilename(this.listOfFiles.ToArray()[0]) != this.filename)
+                bool flag = false;
+                while (this.listOfFiles.Count != 0 && !flag)
                 {
                     string process = this.listOfFiles.ToArray()[0];
-                    FileInfo parrentFile = new FileInfo(process);
-                    string parrent = parrentFile.DirectoryName;
-                    changeColor(graph, parrent, process, Microsoft.Msagl.Drawing.Color.Red);
-                    this.listOfFiles.Remove(process);
+                    FileAttributes attr = File.GetAttributes(process);
+                    if (getFilename(process) != this.filename || (attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        FileInfo parrentFile = new FileInfo(process);
+                        string parrent = parrentFile.DirectoryName;
+                        changeColor(graph, parrent, process, Microsoft.Msagl.Drawing.Color.Red);
+                        this.listOfFiles.Remove(process);
+                    } else
+                    {
+                        flag = true;
+                    }
                 }
 
                 if (this.listOfFiles.Count != 0)
