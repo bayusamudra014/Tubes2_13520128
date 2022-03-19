@@ -2,17 +2,19 @@
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 
 namespace Tubes2Stima
 {
     public partial class Form1 : Form
     {
+        private string currentPath = "";
         private string filename = "";
         private bool allfiles = false;
         private string choice = "";
-        private string currentPath = "";
         private List<string> listOfFiles = new List<string>();
         private bool isFound = false;
+        private List<string> resultFiles = new List<string>();
         public Form1()
         {
             InitializeComponent();
@@ -98,6 +100,7 @@ namespace Tubes2Stima
                     {
                         changeColor(graph, this.currentPath, process, Microsoft.Msagl.Drawing.Color.Green);
                         this.isFound = true;
+                        this.resultFiles.Add(process);
                     }
                     this.listOfFiles.Remove(process);
                 }
@@ -124,6 +127,7 @@ namespace Tubes2Stima
                 {
                     changeColor(graph, this.currentPath, this.listOfFiles.ToArray()[0], Microsoft.Msagl.Drawing.Color.Green);
                     this.isFound = true;
+                    this.resultFiles.Add(this.listOfFiles.ToArray()[0]);
                     while (this.listOfFiles.Count != 0)
                     {
                         this.listOfFiles.Remove(this.listOfFiles.ToArray()[0]);
@@ -208,6 +212,7 @@ namespace Tubes2Stima
                 Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
                 //create the graph content 
                 this.isFound = false;
+                this.resultFiles.Clear();
                 this.makeGraph(graph, this.currentPath);
                 if (this.choice == "BFS")
                 {
@@ -217,6 +222,16 @@ namespace Tubes2Stima
                     addDFSList(this.currentPath);
                 }
                 processGraph(graph);
+                label5.Text = "Path File:";
+                if (this.isFound)
+                {
+                    linkLabel1.Text = this.resultFiles.ToArray()[0];
+                    label6.Text = "";
+                } else
+                {
+                    label6.Text = "No path found";
+                    linkLabel1.Text = "";
+                }
                 //bind the graph to the viewer 
                 viewer.Graph = graph;
                 //associate the viewer with the form 
@@ -226,6 +241,14 @@ namespace Tubes2Stima
                 form.ResumeLayout();
                 //show the form 
                 form.ShowDialog();
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (this.isFound)
+            {
+                Process.Start(this.resultFiles.ToArray()[0]);
             }
         }
     }
