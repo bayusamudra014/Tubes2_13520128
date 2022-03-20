@@ -65,6 +65,32 @@ namespace Tubes2Stima
         private void addBFSList(string path)
         {
             // TODO
+            Queue<DirectoryInfo> visitedDirsQueue = new Queue<DirectoryInfo>();
+
+            visitedDirsQueue.Enqueue(new DirectoryInfo(path));
+            
+            while (visitedDirsQueue.Count > 0)
+            {
+                DirectoryInfo currentDir = visitedDirsQueue.Dequeue();
+                
+                this.listOfFiles.Add(currentDir.Name);
+
+                DirectoryInfo[] children = currentDir.GetDirectories();
+                foreach (DirectoryInfo child in children)
+                {
+                    visitedDirsQueue.Enqueue(child);
+                }
+
+                FileInfo[] childrenFile = currentDir.GetFiles();
+
+                foreach (FileInfo child in childrenFile)
+                {
+                    this.listOfFiles.Add(child.Name);
+                }
+
+            }
+
+            // visitedDirsQueue.Enqueue(Directory.GetFiles(path))
         }
 
         private void addDFSList(string path)
