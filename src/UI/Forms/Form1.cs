@@ -66,7 +66,7 @@ namespace Tubes2Stima
         {
             // TODO
             Queue<string> visitedDirsQueue = new Queue<string>();
-            
+
             visitedDirsQueue.Enqueue(path);
 
             int i = 0;
@@ -79,19 +79,20 @@ namespace Tubes2Stima
                 }
                 i++;
                 
-                string[] files = Directory.GetFiles(currentDir);
-                foreach (string file in files)
+                if (Directory.Exists(currentDir))
                 {
-                    this.listOfFiles.Add(file);
-                }
+                    string[] children = Directory.GetDirectories(currentDir);
+                    foreach (string child in children)
+                    {
+                        visitedDirsQueue.Enqueue(child);
+                    }
                 
-                string[] children = Directory.GetDirectories(currentDir);
-                foreach (string child in children)
-                {
-                    visitedDirsQueue.Enqueue(child);
+                    string[] files = Directory.GetFiles(currentDir);
+                    foreach (string file in files)
+                    {
+                        visitedDirsQueue.Enqueue(file);
+                    }
                 }
-
-                
             }
         }
 
