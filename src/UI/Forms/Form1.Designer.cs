@@ -39,10 +39,9 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.label6 = new System.Windows.Forms.Label();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // button1
@@ -165,35 +164,18 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(418, 200);
+            this.label5.Location = new System.Drawing.Point(449, 210);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(0, 20);
+            this.label5.Size = new System.Drawing.Size(84, 20);
             this.label5.TabIndex = 11;
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.Location = new System.Drawing.Point(418, 227);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(0, 17);
-            this.linkLabel1.TabIndex = 12;
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(418, 227);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(0, 17);
-            this.label6.TabIndex = 13;
+            this.label5.Text = "Path Link:";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(219, 213);
+            this.checkBox2.Location = new System.Drawing.Point(219, 212);
             this.checkBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(118, 21);
@@ -206,21 +188,32 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(418, 345);
+            this.label7.Location = new System.Drawing.Point(450, 332);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(0, 17);
             this.label7.TabIndex = 13;
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(452, 235);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(459, 52);
+            this.listBox1.TabIndex = 15;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 447);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.radioButton2);
@@ -253,10 +246,9 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

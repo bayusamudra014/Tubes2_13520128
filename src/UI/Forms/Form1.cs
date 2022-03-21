@@ -221,6 +221,21 @@ namespace Tubes2Stima
 
         }
 
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             this.filename = textBox2.Text;
@@ -277,6 +292,7 @@ namespace Tubes2Stima
                 //create the graph content 
                 this.isFound = false;
                 this.resultFiles.Clear();
+                listBox1.Items.Clear();
                 this.makeGraph(graph, this.currentPath);
                 if (this.choice == "BFS")
                 {
@@ -287,38 +303,32 @@ namespace Tubes2Stima
                 }
                 processGraph(form, viewer, graph);
                 stopwatch.Stop();
-                label5.Text = "Path File:";
                 if (this.isFound)
                 {
-                    linkLabel1.Text = "";
                     foreach (string path in this.resultFiles)
                     {
-                        linkLabel1.Text += path;
-                        linkLabel1.Text += "\n";
+                        listBox1.Items.Add(path);
                     }
-                    
-                    label6.Text = "";
                     label7.Text = "Elapsed Time is " + stopwatch.ElapsedMilliseconds.ToString() +" ms";
                 } else
                 {
-                    label6.Text = "No path found";
-                    linkLabel1.Text = "";
+                    listBox1.Items.Add("No path found");
                     label7.Text = "Elapsed Time is " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
                 }
-            }
-        }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (this.isFound)
-            {
-                Process.Start(this.resultFiles.ToArray()[0]);
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.isFound)
+            {
+                Process.Start(listBox1.Items[listBox1.SelectedIndex].ToString());
+            }
         }
     }
 }
