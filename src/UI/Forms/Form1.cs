@@ -285,12 +285,8 @@ namespace Tubes2Stima
                 {
                     addDFSList(this.currentPath);
                 }
-<<<<<<< HEAD
                 processGraph(form, viewer, graph);
-=======
-                processGraph(graph);
                 stopwatch.Stop();
->>>>>>> 6e430e8c150f2e30e6543afa8a269b1eb0f6f09a
                 label5.Text = "Path File:";
                 if (this.isFound)
                 {
