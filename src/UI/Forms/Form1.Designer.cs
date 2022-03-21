@@ -164,7 +164,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(449, 210);
+            this.label5.Location = new System.Drawing.Point(436, 210);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(84, 20);
             this.label5.TabIndex = 11;
@@ -188,7 +188,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(450, 332);
+            this.label7.Location = new System.Drawing.Point(437, 332);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(0, 17);
@@ -200,9 +200,9 @@
             this.listBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(452, 235);
+            this.listBox1.Location = new System.Drawing.Point(439, 235);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(459, 52);
+            this.listBox1.Size = new System.Drawing.Size(617, 68);
             this.listBox1.TabIndex = 15;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
