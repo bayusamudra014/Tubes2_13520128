@@ -11,6 +11,7 @@ namespace Tubes2Stima
         private string currentPath = "";
         private string filename = "";
         private bool allfiles = false;
+        private bool showprocess = false;
         private string choice = "";
         private List<string> listOfFiles = new List<string>();
         private bool isFound = false;
@@ -64,7 +65,6 @@ namespace Tubes2Stima
 
         private void addBFSList(string path)
         {
-            // TODO
             Queue<string> visitedDirsQueue = new Queue<string>();
 
             visitedDirsQueue.Enqueue(path);
@@ -78,7 +78,7 @@ namespace Tubes2Stima
                     this.listOfFiles.Add(currentDir);
                 }
                 i++;
-                
+
                 if (Directory.Exists(currentDir))
                 {
                     string[] children = Directory.GetDirectories(currentDir);
@@ -86,7 +86,7 @@ namespace Tubes2Stima
                     {
                         visitedDirsQueue.Enqueue(child);
                     }
-                
+
                     string[] files = Directory.GetFiles(currentDir);
                     foreach (string file in files)
                     {
@@ -112,7 +112,20 @@ namespace Tubes2Stima
             }
         }
 
-        private void processGraph(Microsoft.Msagl.Drawing.Graph graph)
+        private void showForm(System.Windows.Forms.Form form, Microsoft.Msagl.GraphViewerGdi.GViewer viewer, Microsoft.Msagl.Drawing.Graph graph)
+        {
+            //bind the graph to the viewer 
+            viewer.Graph = graph;
+            //associate the viewer with the form 
+            form.SuspendLayout();
+            viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            form.Controls.Add(viewer);
+            form.ResumeLayout();
+            //show the form 
+            form.ShowDialog();
+        }
+
+        private void processGraph(System.Windows.Forms.Form form, Microsoft.Msagl.GraphViewerGdi.GViewer viewer, Microsoft.Msagl.Drawing.Graph graph)
         {
             if (this.allfiles)
             {
@@ -128,10 +141,16 @@ namespace Tubes2Stima
                     } else
                     {
                         changeColor(graph, this.currentPath, process, Microsoft.Msagl.Drawing.Color.Green);
+                        graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
                         this.isFound = true;
                         this.resultFiles.Add(process);
                     }
                     this.listOfFiles.Remove(process);
+                    
+                    if (this.showprocess)
+                    {
+                        showForm(form, viewer, graph);
+                    }
                 }
             } else
             {
@@ -150,11 +169,17 @@ namespace Tubes2Stima
                     {
                         flag = true;
                     }
+
+                    if (this.showprocess && !flag)
+                    {
+                        showForm(form, viewer, graph);
+                    }
                 }
 
                 if (this.listOfFiles.Count != 0)
                 {
                     changeColor(graph, this.currentPath, this.listOfFiles.ToArray()[0], Microsoft.Msagl.Drawing.Color.Green);
+                    graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
                     this.isFound = true;
                     this.resultFiles.Add(this.listOfFiles.ToArray()[0]);
                     while (this.listOfFiles.Count != 0)
@@ -164,14 +189,11 @@ namespace Tubes2Stima
                 }
             }
 
-            if (this.isFound)
-            {
-                graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
-            }
-            else
+            if (!this.isFound)
             {
                 graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Red;
             }
+            showForm(form, viewer, graph);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -215,6 +237,17 @@ namespace Tubes2Stima
             }
         }
 
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.showprocess)
+            {
+                this.showprocess = false;
+            }
+            else
+            {
+                this.showprocess = true;
+            }
+        }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -250,26 +283,23 @@ namespace Tubes2Stima
                 {
                     addDFSList(this.currentPath);
                 }
-                processGraph(graph);
+                processGraph(form, viewer, graph);
                 label5.Text = "Path File:";
                 if (this.isFound)
                 {
-                    linkLabel1.Text = this.resultFiles.ToArray()[0];
+                    linkLabel1.Text = "";
+                    foreach (string path in this.resultFiles)
+                    {
+                        linkLabel1.Text += path;
+                        linkLabel1.Text += "\n";
+                    }
+                    
                     label6.Text = "";
                 } else
                 {
                     label6.Text = "No path found";
                     linkLabel1.Text = "";
                 }
-                //bind the graph to the viewer 
-                viewer.Graph = graph;
-                //associate the viewer with the form 
-                form.SuspendLayout();
-                viewer.Dock = System.Windows.Forms.DockStyle.Fill;
-                form.Controls.Add(viewer);
-                form.ResumeLayout();
-                //show the form 
-                form.ShowDialog();
             }
         }
 
