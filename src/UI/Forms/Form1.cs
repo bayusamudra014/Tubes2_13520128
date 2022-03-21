@@ -233,6 +233,8 @@ namespace Tubes2Stima
                 MessageBox.Show("Sorry, please give a valid input");
             } else
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
                 //create a form 
                 System.Windows.Forms.Form form = new System.Windows.Forms.Form();
                 //create a viewer object 
@@ -251,15 +253,18 @@ namespace Tubes2Stima
                     addDFSList(this.currentPath);
                 }
                 processGraph(graph);
+                stopwatch.Stop();
                 label5.Text = "Path File:";
                 if (this.isFound)
                 {
                     linkLabel1.Text = this.resultFiles.ToArray()[0];
                     label6.Text = "";
+                    label7.Text = "Elapsed Time is " + stopwatch.ElapsedMilliseconds.ToString() +" ms";
                 } else
                 {
                     label6.Text = "No path found";
                     linkLabel1.Text = "";
+                    label7.Text = "Elapsed Time is " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
                 }
                 //bind the graph to the viewer 
                 viewer.Graph = graph;
@@ -279,6 +284,11 @@ namespace Tubes2Stima
             {
                 Process.Start(this.resultFiles.ToArray()[0]);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
