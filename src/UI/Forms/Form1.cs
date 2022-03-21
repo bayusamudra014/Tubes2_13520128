@@ -301,8 +301,8 @@ namespace Tubes2Stima
                 {
                     addDFSList(this.currentPath);
                 }
-                processGraph(form, viewer, graph);
                 stopwatch.Stop();
+                processGraph(form, viewer, graph);
                 if (this.isFound)
                 {
                     foreach (string path in this.resultFiles)
