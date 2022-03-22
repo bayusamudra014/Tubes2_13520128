@@ -16,6 +16,7 @@ namespace Tubes2Stima
         private List<string> listOfFiles = new List<string>();
         private bool isFound = false;
         private List<string> resultFiles = new List<string>();
+        private long time = 0;
         public Form1()
         {
             InitializeComponent();
@@ -127,10 +128,12 @@ namespace Tubes2Stima
 
         private void processGraph(System.Windows.Forms.Form form, Microsoft.Msagl.GraphViewerGdi.GViewer viewer, Microsoft.Msagl.Drawing.Graph graph)
         {
+            Stopwatch stopwatch = new Stopwatch();
             if (this.allfiles)
             {
                 while (this.listOfFiles.Count != 0)
                 {
+                    stopwatch.Start();
                     string process = this.listOfFiles.ToArray()[0];
                     FileAttributes attr = File.GetAttributes(process);
                     if (getFilename(process) != this.filename || (attr & FileAttributes.Directory) == FileAttributes.Directory)
@@ -146,7 +149,8 @@ namespace Tubes2Stima
                         this.resultFiles.Add(process);
                     }
                     this.listOfFiles.Remove(process);
-                    
+                    stopwatch.Stop();
+
                     if (this.showprocess)
                     {
                         showForm(form, viewer, graph);
@@ -157,6 +161,7 @@ namespace Tubes2Stima
                 bool flag = false;
                 while (this.listOfFiles.Count != 0 && !flag)
                 {
+                    stopwatch.Start();
                     string process = this.listOfFiles.ToArray()[0];
                     FileAttributes attr = File.GetAttributes(process);
                     if (getFilename(process) != this.filename || (attr & FileAttributes.Directory) == FileAttributes.Directory)
@@ -169,6 +174,7 @@ namespace Tubes2Stima
                     {
                         flag = true;
                     }
+                    stopwatch.Stop();
 
                     if (this.showprocess && !flag)
                     {
@@ -176,23 +182,22 @@ namespace Tubes2Stima
                     }
                 }
 
+                stopwatch.Start();
                 if (this.listOfFiles.Count != 0)
                 {
                     changeColor(graph, this.currentPath, this.listOfFiles.ToArray()[0], Microsoft.Msagl.Drawing.Color.Green);
                     graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
                     this.isFound = true;
                     this.resultFiles.Add(this.listOfFiles.ToArray()[0]);
-                    while (this.listOfFiles.Count != 0)
-                    {
-                        this.listOfFiles.Remove(this.listOfFiles.ToArray()[0]);
-                    }
                 }
+                stopwatch.Stop();
             }
 
             if (!this.isFound)
             {
                 graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Red;
             }
+            this.time = stopwatch.ElapsedMilliseconds;
             showForm(form, viewer, graph);
         }
 
@@ -281,8 +286,6 @@ namespace Tubes2Stima
                 MessageBox.Show("Sorry, please give a valid input");
             } else
             {
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
                 //create a form 
                 System.Windows.Forms.Form form = new System.Windows.Forms.Form();
                 //create a viewer object 
@@ -290,8 +293,10 @@ namespace Tubes2Stima
                 //create a graph object 
                 Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
                 //create the graph content 
+                this.listOfFiles.Clear();
                 this.isFound = false;
                 this.resultFiles.Clear();
+                this.time = 0;
                 listBox1.Items.Clear();
                 this.makeGraph(graph, this.currentPath);
                 if (this.choice == "BFS")
@@ -301,7 +306,6 @@ namespace Tubes2Stima
                 {
                     addDFSList(this.currentPath);
                 }
-                stopwatch.Stop();
                 processGraph(form, viewer, graph);
                 if (this.isFound)
                 {
@@ -309,11 +313,11 @@ namespace Tubes2Stima
                     {
                         listBox1.Items.Add(path);
                     }
-                    label7.Text = "Elapsed Time is " + stopwatch.ElapsedMilliseconds.ToString() +" ms";
+                    label7.Text = "Elapsed Time is " + this.time.ToString() + " ms";
                 } else
                 {
                     listBox1.Items.Add("No path found");
-                    label7.Text = "Elapsed Time is " + stopwatch.ElapsedMilliseconds.ToString() + " ms";
+                    label7.Text = "Elapsed Time is " + this.time.ToString() + " ms";
                 }
             }
         }
