@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Tubes2Stima
 {
@@ -279,7 +280,7 @@ namespace Tubes2Stima
             this.choice = "DFS";
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             if (this.filename == "" || this.choice == "" || this.currentPath == "")
             {
@@ -299,14 +300,22 @@ namespace Tubes2Stima
                 this.time = 0;
                 listBox1.Items.Clear();
                 this.makeGraph(graph, this.currentPath);
+                Task temp;
+                
+                
                 if (this.choice == "BFS")
                 {
-                    addBFSList(this.currentPath);
+                    temp = Task.Run(()=> addBFSList(this.currentPath));
+                    
                 } else
                 {
-                    addDFSList(this.currentPath);
+                    temp = Task.Run(() => addDFSList(this.currentPath));
+
                 }
-                processGraph(form, viewer, graph);
+
+                await temp;
+                var taskproses = Task.Run(()=>processGraph(form, viewer, graph));
+                
                 if (this.isFound)
                 {
                     foreach (string path in this.resultFiles)
@@ -319,6 +328,8 @@ namespace Tubes2Stima
                     listBox1.Items.Add("No path found");
                     label7.Text = "Elapsed Time is " + this.time.ToString() + " ms";
                 }
+
+                await taskproses;
             }
         }
 
