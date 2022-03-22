@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Tubes2Stima
 {
@@ -199,7 +199,8 @@ namespace Tubes2Stima
                 graph.FindNode(getFilename(this.currentPath)).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Red;
             }
             this.time = stopwatch.ElapsedMilliseconds;
-            showForm(form, viewer, graph);
+            var thread = new Thread(() => showForm(form, viewer, graph));
+            thread.Start();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -299,23 +300,15 @@ namespace Tubes2Stima
                 this.resultFiles.Clear();
                 this.time = 0;
                 listBox1.Items.Clear();
-                this.makeGraph(graph, this.currentPath);
-                Task temp;
-                
-                
+                this.makeGraph(graph, this.currentPath);   
                 if (this.choice == "BFS")
                 {
-                    temp = Task.Run(()=> addBFSList(this.currentPath));
-                    
+                    addBFSList(this.currentPath);                  
                 } else
                 {
-                    temp = Task.Run(() => addDFSList(this.currentPath));
-
+                    addDFSList(this.currentPath);
                 }
-
-                await temp;
-                var taskproses = Task.Run(()=>processGraph(form, viewer, graph));
-                
+                processGraph(form, viewer, graph);              
                 if (this.isFound)
                 {
                     foreach (string path in this.resultFiles)
@@ -328,8 +321,6 @@ namespace Tubes2Stima
                     listBox1.Items.Add("No path found");
                     label7.Text = "Elapsed Time is " + this.time.ToString() + " ms";
                 }
-
-                await taskproses;
             }
         }
 
