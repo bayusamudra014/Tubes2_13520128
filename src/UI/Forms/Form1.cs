@@ -83,16 +83,16 @@ namespace Tubes2Stima
 
                 if (Directory.Exists(currentDir))
                 {
-                    string[] children = Directory.GetDirectories(currentDir);
-                    foreach (string child in children)
-                    {
-                        visitedDirsQueue.Enqueue(child);
-                    }
-
                     string[] files = Directory.GetFiles(currentDir);
                     foreach (string file in files)
                     {
                         visitedDirsQueue.Enqueue(file);
+                    }
+
+                    string[] children = Directory.GetDirectories(currentDir);
+                    foreach (string child in children)
+                    {
+                        visitedDirsQueue.Enqueue(child);
                     }
                 }
             }
