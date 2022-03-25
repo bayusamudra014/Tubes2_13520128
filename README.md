@@ -14,9 +14,11 @@ Untuk melakukan kompilasi program, diperlukan spesifikasi sebagai berikut
 1. (Optional) Visual Studio 2022
 2. (Optional) Jetbrain Rider 2021.3.3
 
-## How To Compile
+## How To Compile & Run
 
-## How To Run
+1. Download atau clone repository ini
+2. Compile source code yang telah di download pada visual studio Anda
+3. Jalankan hasil compile pada visual studio Anda
 
 ## Authors
 | NIM      | NAMA                   |
